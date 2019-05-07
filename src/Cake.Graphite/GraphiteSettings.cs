@@ -8,7 +8,7 @@ namespace Cake.Graphite
     public class GraphiteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GraphiteSettings"/> class.
+        /// Initializes a new instance of the GraphiteSettings class.
         /// </summary>
         /// <param name="host">Graphite host to send metrics to.</param>
         /// <param name="httpApiPort">Graphite host port.</param>

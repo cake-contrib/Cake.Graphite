@@ -23,7 +23,7 @@ namespace Cake.Graphite
         /// <example>
         /// <code>
         /// <![CDATA[
-
+        /// #addin nuget:?package=Cake.Graphite&amp;loaddependencies=true
         /// public class BuildData
         /// {
         ///     public Graphite Graphite { get; }
@@ -44,6 +44,12 @@ namespace Cake.Graphite
         ///    });
         /// 
         ///    return new BuildData(graphiteClient);
+        /// });
+        ///
+        /// Task("Default")
+        ///     .Does<BuildData>(data =>
+        /// {
+        ///     data.Graphite.Send("hest", 3);
         /// });
         /// ]]>
         /// </code>
