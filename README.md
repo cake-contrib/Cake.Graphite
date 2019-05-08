@@ -15,7 +15,7 @@ Cake.Graphite is a set of aliases for Cake to help with sending metrics to Graph
 
 |Develop|Master|
 |:--:|:--:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/<appveyorlink>/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-graphite/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/<appveyorlink2>/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-graphite/branch/master)|
+|[![Build status](https://ci.appveyor.com/api/projects/status/lemrvbiemwqd2ssu?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-graphite)|[![Build status](https://ci.appveyor.com/api/projects/status/lemrvbiemwqd2ssu/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-graphite/branch/master)|
 
 ## Code Coverage
 
