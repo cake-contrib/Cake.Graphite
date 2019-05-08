@@ -1,6 +1,8 @@
 using Cake.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ahd.Graphite;
 using Cake.Core.Diagnostics;
 using Moq;
@@ -73,16 +75,43 @@ namespace Cake.Graphite.Tests
         {
             const string prefix = "prefix_test";
             const string testMetricName = "test";
+            string returnValue = null;
             var expectedName = $"{prefix}.{testMetricName}";
 
             _settings.Prefix = prefix;
 
             var mockClient = new Mock<IGraphiteClient>();
             mockClient.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<double>()))
-                .Callback((string metricName, double value) => { Assert.AreEqual(metricName, expectedName); });
+                .Callback((string metricName, double value) => { returnValue = metricName; });
 
             var graphite = new Graphite(_log, _settings, mockClient.Object);
             graphite.Send(testMetricName, 1);
+
+            Assert.IsNotNull(returnValue);
+            Assert.AreEqual(returnValue, expectedName);
+        }
+
+        [Test]
+        public void SendingDatapointWithPrefix_Works()
+        {
+            const string prefix = "prefix_test";
+            const string testMetricName = "test";
+            string returnValue = null;
+            var expectedName = $"{prefix}.{testMetricName}";
+
+            _settings.Prefix = prefix;
+
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>()))
+                .Callback((ICollection<Datapoint> x) => { returnValue = x.First().Series; });
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint>()))
+                .Callback((Datapoint[] x) => { returnValue = x[0].Series; });
+
+            var graphite = new Graphite(_log, _settings, mockClient.Object);
+            graphite.Send(new Datapoint(testMetricName, 1,DateTime.Now));
+
+            Assert.IsNotNull(returnValue);
+            Assert.AreEqual(expectedName, returnValue);
         }
     }
 }
