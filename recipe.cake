@@ -1,4 +1,4 @@
-#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
+#load nuget:?package=Cake.Recipe&version=1.0.0
 
 Environment.SetVariableNames();
 
@@ -6,9 +6,9 @@ BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./src",
                             title: "Cake.Graphite",
-                            repositoryOwner: "e-conomic",
+                            repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Graphite",
-                            appVeyorAccountName: "e-conomic",
+                            appVeyorAccountName: "cakecontrib",
                             shouldRunGitVersion: true);
 
 BuildParameters.PrintParameters(Context);
