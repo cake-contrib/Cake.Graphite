@@ -180,13 +180,34 @@ namespace Cake.Graphite.Tests
             Assert.IsInstanceOf<Graphite>(graphite);
             try
             {
-                GraphiteExtensions.Send(graphite, "test", 1,DateTime.Now);
+                GraphiteExtensions.Send(graphite, "test", 1, DateTime.Now);
                 Assert.Fail($"{nameof(Extension_Send_string_double_timestamp_Throws)} should have thrown an exception");
             }
             catch
             {
                 Assert.Pass();
             }
+        }
+
+        [Test]
+        public void Extension_Send_Collection_Tuple_Ignored_DoesNotThrow()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>())).Throws<Exception>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>())).Throws<Exception>();
+            _settings.ThrowExceptions = false;
+            var graphite = _context.Graphite(_settings, mockClient.Object);
+
+            Assert.IsInstanceOf<Graphite>(graphite);
+            try
+            {
+                GraphiteExtensions.Send(graphite, new List<(string, double)> { ("test", 1) });
+            }
+            catch
+            {
+                Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_Ignored_DoesNotThrow)} should not thrown an exception");
+            }
+            Assert.Pass();
         }
 
         [Test]
@@ -201,13 +222,34 @@ namespace Cake.Graphite.Tests
             Assert.IsInstanceOf<Graphite>(graphite);
             try
             {
-                GraphiteExtensions.Send(graphite, new List<(string, double)>(){("test", 1)});
+                GraphiteExtensions.Send(graphite, new List<(string, double)> { ("test", 1) });
                 Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_Throws)} should have thrown an exception");
             }
             catch
             {
                 Assert.Pass();
             }
+        }
+
+        [Test]
+        public void Extension_Send_Collection_Tuple_With_Datetime_Ignored_DoesNotThrows()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>())).Throws<Exception>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>())).Throws<Exception>();
+            _settings.ThrowExceptions = false;
+            var graphite = _context.Graphite(_settings, mockClient.Object);
+
+            Assert.IsInstanceOf<Graphite>(graphite);
+            try
+            {
+                GraphiteExtensions.Send(graphite, new List<(string, double, DateTime)> { ("test", 1, DateTime.UtcNow) });
+            }
+            catch
+            {
+                Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_With_Datetime_Ignored_DoesNotThrows)} should not thrown an exception");
+            }
+            Assert.Pass();
         }
 
         [Test]
@@ -222,13 +264,34 @@ namespace Cake.Graphite.Tests
             Assert.IsInstanceOf<Graphite>(graphite);
             try
             {
-                GraphiteExtensions.Send(graphite, new List<(string, double, DateTime)>(){("test", 1, DateTime.UtcNow)});
-                Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_Throws)} should have thrown an exception");
+                GraphiteExtensions.Send(graphite, new List<(string, double, DateTime)> { ("test", 1, DateTime.UtcNow) });
+                Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_With_Datetime_Throws)} should have thrown an exception");
             }
             catch
             {
                 Assert.Pass();
             }
+        }
+
+        [Test]
+        public void Extension_Send_Collection_Datapoint_Ignored_DoesNotThrows()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>())).Throws<Exception>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>())).Throws<Exception>();
+            _settings.ThrowExceptions = false;
+            var graphite = _context.Graphite(_settings, mockClient.Object);
+
+            Assert.IsInstanceOf<Graphite>(graphite);
+            try
+            {
+                GraphiteExtensions.Send(graphite, new Collection<Datapoint> { new Datapoint("test", 1, DateTime.UtcNow) });
+            }
+            catch
+            {
+                Assert.Fail($"{nameof(Extension_Send_Collection_Datapoint_Ignored_DoesNotThrows)} should not thrown an exception");
+            }
+            Assert.Pass();
         }
 
         [Test]
@@ -243,8 +306,50 @@ namespace Cake.Graphite.Tests
             Assert.IsInstanceOf<Graphite>(graphite);
             try
             {
-                GraphiteExtensions.Send(graphite, new Collection<Datapoint>{new Datapoint("test", 1, DateTime.UtcNow)});
-                Assert.Fail($"{nameof(Extension_Send_Collection_Tuple_Throws)} should have thrown an exception");
+                GraphiteExtensions.Send(graphite, new Collection<Datapoint> { new Datapoint("test", 1, DateTime.UtcNow) });
+                Assert.Fail($"{nameof(Extension_Send_Collection_Datapoint_Throws)} should have thrown an exception");
+            }
+            catch
+            {
+                Assert.Pass();
+            }
+        }
+
+        [Test]
+        public void Extension_Send_Array_Datapoint_Ignored_DoesNotThrows()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>())).Throws<Exception>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>())).Throws<Exception>();
+            _settings.ThrowExceptions = false;
+            var graphite = _context.Graphite(_settings, mockClient.Object);
+
+            Assert.IsInstanceOf<Graphite>(graphite);
+            try
+            {
+                graphite.Send(new Datapoint("test", 1, DateTime.UtcNow));
+            }
+            catch
+            {
+                Assert.Fail($"{nameof(Extension_Send_Array_Datapoint_Ignored_DoesNotThrows)} should not thrown an exception");
+            }
+            Assert.Pass();
+        }
+
+        [Test]
+        public void Extension_Send_Array_Datapoint_Throws()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>())).Throws<Exception>();
+            mockClient.Setup(x => x.Send(It.IsAny<ICollection<Datapoint>>())).Throws<Exception>();
+            _settings.ThrowExceptions = true;
+            var graphite = _context.Graphite(_settings, mockClient.Object);
+
+            Assert.IsInstanceOf<Graphite>(graphite);
+            try
+            {
+                graphite.Send(new Datapoint("test", 1, DateTime.UtcNow));
+                Assert.Fail($"{nameof(Extension_Send_Array_Datapoint_Throws)} should have thrown an exception");
             }
             catch
             {

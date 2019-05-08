@@ -1,6 +1,7 @@
 ﻿using ahd.Graphite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cake.Graphite
 {
@@ -37,6 +38,7 @@ namespace Cake.Graphite
     /// <summary>
     /// Wrapper of ahd.GraphiteClient using the IGraphiteClient interface
     /// </summary>
+    [ExcludeFromCodeCoverage]
     class GraphiteClientWrapper : IGraphiteClient
     {
         private readonly GraphiteClient _client;

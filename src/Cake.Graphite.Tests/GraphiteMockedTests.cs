@@ -1,6 +1,7 @@
 using Cake.Testing;
 using NUnit.Framework;
 using System;
+using ahd.Graphite;
 using Cake.Core.Diagnostics;
 using Moq;
 
@@ -31,9 +32,7 @@ namespace Cake.Graphite.Tests
             mockClient.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<double>())).Throws<Exception>();
             var graphite = new Graphite(_log, _settings, mockClient.Object);
 
-            Assert.Throws<Exception>(() => {
-                graphite.Send("test", 1);
-            });
+            Assert.Throws<Exception>(() => { graphite.Send("test", 1); });
         }
 
         [Test]
@@ -44,9 +43,29 @@ namespace Cake.Graphite.Tests
             _settings.ThrowExceptions = false;
             var graphite = new Graphite(_log, _settings, mockClient.Object);
 
-            Assert.DoesNotThrow(() => {
-                graphite.Send("test", 1);
-            });
+            Assert.DoesNotThrow(() => { graphite.Send("test", 1); });
+        }
+
+        [Test]
+        public void Send_Works()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<double>()));
+            _settings.ThrowExceptions = true;
+            var graphite = new Graphite(_log, _settings, mockClient.Object);
+
+            Assert.DoesNotThrow(() => { graphite.Send("test", 1); });
+        }
+
+        [Test]
+        public void Send_Datapoint_Works()
+        {
+            var mockClient = new Mock<IGraphiteClient>();
+            mockClient.Setup(x => x.Send(It.IsAny<Datapoint[]>()));
+            _settings.ThrowExceptions = true;
+            var graphite = new Graphite(_log, _settings, mockClient.Object);
+
+            Assert.DoesNotThrow(() => { graphite.Send(new Datapoint("test", 1, DateTime.UtcNow)); });
         }
 
         [Test]
@@ -59,11 +78,9 @@ namespace Cake.Graphite.Tests
             _settings.Prefix = prefix;
 
             var mockClient = new Mock<IGraphiteClient>();
-            mockClient.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<double>())).Callback((string metricName, double value) =>
-                {
-                    Assert.AreEqual(metricName, expectedName);
-                });
-            
+            mockClient.Setup(x => x.Send(It.IsAny<string>(), It.IsAny<double>()))
+                .Callback((string metricName, double value) => { Assert.AreEqual(metricName, expectedName); });
+
             var graphite = new Graphite(_log, _settings, mockClient.Object);
             graphite.Send(testMetricName, 1);
         }
