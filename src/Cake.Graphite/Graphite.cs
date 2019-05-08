@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Cake.Graphite
 {
     using ahd.Graphite;
@@ -75,6 +78,50 @@ namespace Cake.Graphite
             {
                 _log.Verbose($"Sending metric: '{PrefixMetricName(metricName)}' with value '{value}'");
                 _client.Send(PrefixMetricName(metricName), value);
+            }
+            catch(Exception ex)
+            {
+                if (_settings.ThrowExceptions) throw;
+                _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
+            }
+        }
+
+        public void Send(ICollection<(string metricName,double value)> datapointTuples)
+        {
+            var now = DateTime.UtcNow;
+            var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, now)).ToArray();
+
+            try
+            {
+                _client.Send(datapoints);
+            }
+            catch(Exception ex)
+            {
+                if (_settings.ThrowExceptions) throw;
+                _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
+            }
+        }
+
+        public void Send(ICollection<(string metricName,double value,DateTime timeStamp)> datapointTuples)
+        {
+            var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, x.timeStamp)).ToArray();
+
+            try
+            {
+                _client.Send(datapoints);
+            }
+            catch(Exception ex)
+            {
+                if (_settings.ThrowExceptions) throw;
+                _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
+            }
+        }
+
+        public void Send(ICollection<ahd.Graphite.Datapoint> datapoints)
+        {
+            try
+            {
+                _client.Send(datapoints);
             }
             catch(Exception ex)
             {

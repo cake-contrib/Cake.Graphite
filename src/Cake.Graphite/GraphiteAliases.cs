@@ -1,12 +1,11 @@
-using System.Runtime.CompilerServices;
 using Cake.Core.Diagnostics;
 using JetBrains.Annotations;
 
 namespace Cake.Graphite
 {
-    using System;
     using Core;
     using Core.Annotations;
+    using System;
 
     /// <summary>
     /// Graphite aliases
@@ -49,7 +48,7 @@ namespace Cake.Graphite
         /// Task("Default")
         ///     .Does<BuildData>(data =>
         /// {
-        ///     data.Graphite.Send("hest", 3);
+        ///     data.Graphite.Send("test", 1);
         /// });
         /// ]]>
         /// </code>
