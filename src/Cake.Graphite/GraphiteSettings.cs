@@ -27,32 +27,37 @@ namespace Cake.Graphite
         /// <summary>
         /// Gets or sets the option to whether Cake.Graphite should rethrow the exception or not
         /// </summary>
+        [PublicAPI]
         public bool ThrowExceptions { get; set; }
 
         /// <summary>
         /// Gets or sets the graphite client option to use ssl.
         /// </summary>
+        [PublicAPI]
         public bool UseSsl { get; set; }
 
         /// <summary>
         /// Gets or sets the graphite client http api port.
         /// </summary>
+        [PublicAPI]
         public ushort HttpApiPort { get; set; }
 
         /// <summary>
         /// Gets or sets the graphite client batch size.
         /// </summary>
+        [PublicAPI]
         public int BatchSize { get; set; }
 
         /// <summary>
         /// Gets the host metrics are sent to.
         /// </summary>
+        [PublicAPI]
         public string Host { get; set; }
 
         /// <summary>
         /// Gets or sets the graphite client metrics prefix (usually used for api key for hosted services like HostedGraphite).
         /// </summary>
-        [UsedImplicitly]
+        [PublicAPI]
         public string Prefix { get; set; } 
     }
 }

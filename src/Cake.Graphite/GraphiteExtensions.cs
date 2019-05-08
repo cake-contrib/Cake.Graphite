@@ -9,7 +9,7 @@ namespace Cake.Graphite
     /// <summary>
     /// Extension methods for <see cref="Graphite"/>
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public static class GraphiteExtensions{
         /// <summary>
         /// Send a single metric with timestamp of now
@@ -17,7 +17,7 @@ namespace Cake.Graphite
         /// <param name="graphite"></param>
         /// <param name="metricName"></param>
         /// <param name="value"></param>
-        [UsedImplicitly]
+        [PublicAPI]
         public static void Send(this Graphite graphite, string metricName, double value){
             graphite.Send(metricName, value);
         }
@@ -29,27 +29,47 @@ namespace Cake.Graphite
         /// <param name="metricName"></param>
         /// <param name="value"></param>
         /// <param name="timeStamp"></param>
-        [UsedImplicitly]
+        [PublicAPI]
         public static void Send(this Graphite graphite, string metricName, double value, DateTime timeStamp){
             graphite.Send(metricName, value, timeStamp);
         }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Send a collection of value tuple of (metricName, value)
+        /// </summary>
+        /// <param name="graphite"></param>
+        /// <param name="datapointTuples"></param>
+        [PublicAPI]
         public static void Send(this Graphite graphite, ICollection<(string metricName,double value)> datapointTuples){
             graphite.Send(datapointTuples);
         }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Send a collection of value tuple of (metricName, value, timestamp)
+        /// </summary>
+        /// <param name="graphite"></param>
+        /// <param name="datapointTuples"></param>
+        [PublicAPI]
         public static void Send(this Graphite graphite, ICollection<(string metricName,double value,DateTime timestamp)> datapointTuples){
             graphite.Send(datapointTuples);
         }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Send a collection of Datapoint
+        /// </summary>
+        /// <param name="graphite"></param>
+        /// <param name="datapoints"></param>
+        [PublicAPI]
         public static void Send(this Graphite graphite, ICollection<Datapoint> datapoints){
             graphite.Send(datapoints);
         }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Send a collection of Datapoint
+        /// </summary>
+        /// <param name="graphite"></param>
+        /// <param name="datapoints"></param>
+        [PublicAPI]
         public static void Send(this Graphite graphite, params Datapoint[] datapoints){
             graphite.Send(datapoints);
         }

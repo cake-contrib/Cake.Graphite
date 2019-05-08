@@ -42,8 +42,10 @@ namespace Cake.Graphite.Tests
             };
             _log = new FakeLog();
             _configuration = new FakeConfiguration();
-            _environment = new FakeEnvironment(Cake.Core.PlatformFamily.Windows, true);
-            _environment.WorkingDirectory = new DirectoryPath(Environment.CurrentDirectory);
+            _environment = new FakeEnvironment(PlatformFamily.Windows)
+            {
+                WorkingDirectory = new DirectoryPath(Environment.CurrentDirectory)
+            };
             _fileSystem = new FakeFileSystem(_environment);
             _globber = new Globber(_fileSystem, _environment);
 
@@ -59,7 +61,7 @@ namespace Cake.Graphite.Tests
             mockDataService.Setup(x => x.Add(It.IsAny<string>()));
             _dataService = mockDataService.Object;
 
-            _context = new Cake.Core.CakeContext(_fileSystem, _environment, _globber, _log, _arguments, _processRunner, new WindowsRegistry(), _toolLocator, _dataService, _configuration);
+            _context = new CakeContext(_fileSystem, _environment, _globber, _log, _arguments, _processRunner, new WindowsRegistry(), _toolLocator, _dataService, _configuration);
         }
 
         [Test]

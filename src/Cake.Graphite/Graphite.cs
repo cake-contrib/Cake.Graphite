@@ -58,7 +58,7 @@ namespace Cake.Graphite
             return prefixedMetricName;
         }
 
-        public void Send(string metricName, double value, DateTime timeStamp)
+        internal void Send(string metricName, double value, DateTime timeStamp)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace Cake.Graphite
             }
         }
 
-        public void Send(string metricName, double value)
+        internal void Send(string metricName, double value)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace Cake.Graphite
             }
         }
 
-        public void Send(ICollection<(string metricName,double value)> datapointTuples)
+        internal void Send(ICollection<(string metricName,double value)> datapointTuples)
         {
             var now = DateTime.UtcNow;
             var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, now)).ToArray();
@@ -106,14 +106,14 @@ namespace Cake.Graphite
             TrySend(datapoints);
         }
 
-        public void Send(ICollection<(string metricName,double value,DateTime timeStamp)> datapointTuples)
+        internal void Send(ICollection<(string metricName,double value,DateTime timeStamp)> datapointTuples)
         {
             var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, x.timeStamp)).ToArray();
 
             TrySend(datapoints);
         }
 
-        public void Send(ICollection<ahd.Graphite.Datapoint> datapoints)
+        internal void Send(ICollection<Datapoint> datapoints)
         {
             TrySend(datapoints);
         }
