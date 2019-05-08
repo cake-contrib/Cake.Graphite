@@ -9,9 +9,28 @@ namespace Cake.Graphite
     /// </summary>
     public interface IGraphiteClient
     {
+        /// <summary>
+        /// Send a collection of Datapoint
+        /// </summary>
+        /// <param name="datapoints"></param>
         void Send(ICollection<Datapoint> datapoints);
+        /// <summary>
+        /// Send a array of Datapoint
+        /// </summary>
+        /// <param name="datapoints"></param>
         void Send(params Datapoint[] datapoints);
+        /// <summary>
+        /// Send a single metric with a specific timestamp
+        /// </summary>
+        /// <param name="metricName"></param>
+        /// <param name="value"></param>
         void Send(string metricName, double value);
+        /// <summary>
+        /// Send a single metric with timestamp of now
+        /// </summary>
+        /// <param name="metricName"></param>
+        /// <param name="value"></param>
+        /// <param name="timeStamp"></param>
         void Send(string metricName, double value, DateTime timeStamp);
     }
 
