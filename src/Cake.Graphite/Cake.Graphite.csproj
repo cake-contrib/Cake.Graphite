@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Nicolai Brogaard, Visma e-conomic</Authors>
+    <Company>Visma e-conomic</Company>
+    <Description>A set of aliases for Cake to help with delivering metrics to Graphite</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\Debug\netstandard2.0\Cake.Graphite.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\Cake.Graphite.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
+    <PackageReference Include="ahd.Graphite" Version="2.0.0" />
+    <PackageReference Include="Jetbrains.Annotations" Version="2019.1.1" />
+  </ItemGroup>
+
+</Project>
