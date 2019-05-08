@@ -58,6 +58,6 @@ namespace Cake.Graphite
         /// Gets or sets the graphite client metrics prefix (usually used for api key for hosted services like HostedGraphite).
         /// </summary>
         [PublicAPI]
-        public string Prefix { get; set; } 
+        public string Prefix { get; set; }
     }
 }

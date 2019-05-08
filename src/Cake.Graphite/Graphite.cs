@@ -37,7 +37,7 @@ namespace Cake.Graphite
         }
 
         internal Graphite(
-            ICakeLog log, 
+            ICakeLog log,
             GraphiteSettings settings,
             IGraphiteClient client
         )
@@ -65,7 +65,7 @@ namespace Cake.Graphite
                 _log.Verbose($"Sending metric: '{PrefixMetricName(metricName)}' with value '{value}' and timestamp '{timeStamp.ToLongDateString()}'");
                 _client.Send(PrefixMetricName(metricName), value, timeStamp);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (_settings.ThrowExceptions) throw;
                 _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
@@ -79,26 +79,27 @@ namespace Cake.Graphite
                 _log.Verbose($"Sending metric: '{PrefixMetricName(metricName)}' with value '{value}'");
                 _client.Send(PrefixMetricName(metricName), value);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (_settings.ThrowExceptions) throw;
                 _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
             }
         }
 
-        private void TrySend(ICollection<Datapoint> datapoints){
+        private void TrySend(ICollection<Datapoint> datapoints)
+        {
             try
             {
                 _client.Send(datapoints);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (_settings.ThrowExceptions) throw;
                 _log.Verbose($"{nameof(Send)} would have thrown an {ex.GetType()}");
             }
         }
 
-        internal void Send(ICollection<(string metricName,double value)> datapointTuples)
+        internal void Send(ICollection<(string metricName, double value)> datapointTuples)
         {
             var now = DateTime.UtcNow;
             var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, now)).ToArray();
@@ -106,7 +107,7 @@ namespace Cake.Graphite
             TrySend(datapoints);
         }
 
-        internal void Send(ICollection<(string metricName,double value,DateTime timeStamp)> datapointTuples)
+        internal void Send(ICollection<(string metricName, double value, DateTime timeStamp)> datapointTuples)
         {
             var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, x.timeStamp)).ToArray();
 

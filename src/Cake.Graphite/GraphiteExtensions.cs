@@ -10,7 +10,8 @@ namespace Cake.Graphite
     /// Extension methods for <see cref="Graphite"/>
     /// </summary>
     [PublicAPI]
-    public static class GraphiteExtensions{
+    public static class GraphiteExtensions
+    {
         /// <summary>
         /// Send a single metric with timestamp of now
         /// </summary>
@@ -18,7 +19,8 @@ namespace Cake.Graphite
         /// <param name="metricName"></param>
         /// <param name="value"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, string metricName, double value){
+        public static void Send(this Graphite graphite, string metricName, double value)
+        {
             graphite.Send(metricName, value);
         }
 
@@ -30,7 +32,8 @@ namespace Cake.Graphite
         /// <param name="value"></param>
         /// <param name="timeStamp"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, string metricName, double value, DateTime timeStamp){
+        public static void Send(this Graphite graphite, string metricName, double value, DateTime timeStamp)
+        {
             graphite.Send(metricName, value, timeStamp);
         }
 
@@ -40,7 +43,8 @@ namespace Cake.Graphite
         /// <param name="graphite"></param>
         /// <param name="datapointTuples"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<(string metricName,double value)> datapointTuples){
+        public static void Send(this Graphite graphite, ICollection<(string metricName, double value)> datapointTuples)
+        {
             graphite.Send(datapointTuples);
         }
 
@@ -50,7 +54,8 @@ namespace Cake.Graphite
         /// <param name="graphite"></param>
         /// <param name="datapointTuples"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<(string metricName,double value,DateTime timestamp)> datapointTuples){
+        public static void Send(this Graphite graphite, ICollection<(string metricName, double value, DateTime timestamp)> datapointTuples)
+        {
             graphite.Send(datapointTuples);
         }
 
@@ -60,7 +65,8 @@ namespace Cake.Graphite
         /// <param name="graphite"></param>
         /// <param name="datapoints"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<Datapoint> datapoints){
+        public static void Send(this Graphite graphite, ICollection<Datapoint> datapoints)
+        {
             graphite.Send(datapoints);
         }
 
@@ -70,7 +76,8 @@ namespace Cake.Graphite
         /// <param name="graphite"></param>
         /// <param name="datapoints"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, params Datapoint[] datapoints){
+        public static void Send(this Graphite graphite, params Datapoint[] datapoints)
+        {
             graphite.Send(datapoints);
         }
     }

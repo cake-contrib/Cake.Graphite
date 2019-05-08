@@ -30,7 +30,8 @@ namespace Cake.Graphite.Tests
             _settings.Host = null;
             var cakeLog = new FakeLog();
 
-            Assert.Throws<ArgumentNullException>(() => {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
                 _graphite = new Graphite(cakeLog, _settings);
             });
         }
