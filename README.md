@@ -19,7 +19,7 @@ Cake.Graphite is a set of aliases for Cake to help with sending metrics to Graph
 
 ## Code Coverage
 
-[![Coverage Status](https://coveralls.io/repos/github/cake-contrib/Cake.Graphite/badge.svg?branch=develop)](https://coveralls.io/github/cake-contrib/Cake.Graphite?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/cake-contrib/Cake.Graphite/badge.svg?branch=master)](https://coveralls.io/github/cake-contrib/Cake.Graphite?branch=master)
 
 ## Chat Room
 
