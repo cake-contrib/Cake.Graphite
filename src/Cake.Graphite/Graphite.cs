@@ -106,7 +106,7 @@ namespace Cake.Graphite
 
             TrySend(datapoints);
         }
-
+        
         internal void Send(ICollection<(string metricName, double value, DateTime timeStamp)> datapointTuples)
         {
             var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, x.timeStamp)).ToArray();
@@ -114,8 +114,10 @@ namespace Cake.Graphite
             TrySend(datapoints);
         }
 
-        internal void Send(ICollection<Datapoint> datapoints)
+        internal void Send(ICollection<Datapoint> unprefixedDatapoints)
         {
+            var datapoints = unprefixedDatapoints.Select(x => new Datapoint(PrefixMetricName(x.Series), x.Value, x.Timestamp)).ToArray();
+
             TrySend(datapoints);
         }
     }
