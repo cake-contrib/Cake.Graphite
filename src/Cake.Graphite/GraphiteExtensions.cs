@@ -38,34 +38,12 @@ namespace Cake.Graphite
         }
 
         /// <summary>
-        /// Send a collection of value tuple of (metricName, value)
-        /// </summary>
-        /// <param name="graphite"></param>
-        /// <param name="datapointTuples"></param>
-        [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<(string metricName, double value)> datapointTuples)
-        {
-            graphite.Send(datapointTuples);
-        }
-
-        /// <summary>
-        /// Send a collection of value tuple of (metricName, value, timestamp)
-        /// </summary>
-        /// <param name="graphite"></param>
-        /// <param name="datapointTuples"></param>
-        [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<(string metricName, double value, DateTime timestamp)> datapointTuples)
-        {
-            graphite.Send(datapointTuples);
-        }
-
-        /// <summary>
         /// Send a collection of Datapoint
         /// </summary>
         /// <param name="graphite"></param>
         /// <param name="datapoints"></param>
         [PublicAPI]
-        public static void Send(this Graphite graphite, ICollection<Datapoint> datapoints)
+        public static void Send(this Graphite graphite, IEnumerable<Datapoint> datapoints)
         {
             graphite.Send(datapoints);
         }

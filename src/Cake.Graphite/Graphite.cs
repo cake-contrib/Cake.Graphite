@@ -86,11 +86,11 @@ namespace Cake.Graphite
             }
         }
 
-        private void TrySend(ICollection<Datapoint> datapoints)
+        private void TrySend(IEnumerable<Datapoint> datapoints)
         {
             try
             {
-                _client.Send(datapoints);
+                _client.Send(datapoints.ToList());
             }
             catch (Exception ex)
             {
@@ -99,26 +99,11 @@ namespace Cake.Graphite
             }
         }
 
-        internal void Send(ICollection<(string metricName, double value)> datapointTuples)
+        internal void Send(IEnumerable<Datapoint> datapoints)
         {
-            var now = DateTime.UtcNow;
-            var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, now)).ToArray();
+            var prefixedDatapoints = datapoints.Select(x => new Datapoint(PrefixMetricName(x.Series), x.Value, x.UnixTimestamp));
 
-            TrySend(datapoints);
-        }
-        
-        internal void Send(ICollection<(string metricName, double value, DateTime timeStamp)> datapointTuples)
-        {
-            var datapoints = datapointTuples.Select(x => new Datapoint(PrefixMetricName(x.metricName), x.value, x.timeStamp)).ToArray();
-
-            TrySend(datapoints);
-        }
-
-        internal void Send(ICollection<Datapoint> unprefixedDatapoints)
-        {
-            var datapoints = unprefixedDatapoints.Select(x => new Datapoint(PrefixMetricName(x.Series), x.Value, x.Timestamp)).ToArray();
-
-            TrySend(datapoints);
+            TrySend(prefixedDatapoints);
         }
     }
 }
